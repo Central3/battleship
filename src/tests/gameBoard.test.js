@@ -1,5 +1,4 @@
 import gameBoard from "../gameBoard";
-import ship from "../ship";
 
 let testGameBoard;
 let carrier, battleship, destroyer, submarine, patrolBoat;
@@ -7,7 +6,7 @@ let carrier, battleship, destroyer, submarine, patrolBoat;
 beforeAll(() => {
   testGameBoard = gameBoard();
   [carrier, battleship, destroyer, submarine, patrolBoat] =
-    testGameBoard.createTestFleet();
+    testGameBoard.testFleet;
 });
 
 beforeEach(() => {
@@ -71,5 +70,37 @@ describe("Ship placement", () => {
     expect(testGameBoard.placeShip(destroyer, 1, 0, "x")).toMatch(
       "Overlapping",
     );
+  });
+});
+
+describe("Attack ship", () => {
+  it("should return 'Out of bounds' if the coordinates are not in the board", () => {
+    expect(testGameBoard.receiveAttack(-5, 12)).toEqual("Out of bounds");
+  });
+
+  it("should return 'Already hit' and not consider if it's already been hit", () => {
+    testGameBoard.receiveAttack(0, 0);
+    expect(testGameBoard.receiveAttack(0, 0)).toMatch("Already hit");
+  });
+
+  it("should return 'Already hit' and not consider if it's already been hit", () => {
+    testGameBoard.placeFleet();
+    testGameBoard.receiveAttack(0, 0);
+    expect(testGameBoard.receiveAttack(0, 0)).toMatch("Already hit");
+  });
+
+  it("should return the coordinates of the attack", () => {
+    testGameBoard.placeFleet();
+    expect(testGameBoard.receiveAttack(0, 2)).toEqual({ row: 0, col: 2 });
+  });
+
+  it("should have hit a ship with a hit property and record the hit", () => {
+    testGameBoard.placeFleet();
+    let hitBattleship = testGameBoard.receiveAttack(0, 0);
+    hitBattleship = testGameBoard.receiveAttack(1, 0);
+    let hitSubmarine = testGameBoard.receiveAttack(0, 4);
+    expect(hitBattleship).toBe(2);
+    expect(hitSubmarine).toBe(1);
+    expect(testGameBoard.board[0][0]).toMatch("x");
   });
 });

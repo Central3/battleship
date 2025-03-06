@@ -5,6 +5,7 @@ export default function gameBoard() {
   let board = [...Array(boardDimension)].map((row) =>
     Array(boardDimension).fill(null),
   );
+  let testFleet = [ship(5), ship(4), ship(3), ship(3), ship(2)];
 
   function isValidCoordinate(x, y) {
     return x >= 0 && x < boardDimension && y >= 0 && y < boardDimension;
@@ -41,5 +42,28 @@ export default function gameBoard() {
     return board;
   }
 
-  return { board, placeShip, receiveAttack };
+  function placeFleet() {
+    const [carrier, battleship, destroyer, submarine, patrolBoat] = testFleet;
+
+    placeShip(carrier, 3, 2, "x");
+    placeShip(battleship, 0, 0, "y");
+    placeShip(destroyer, 9, 0, "x");
+    placeShip(submarine, 0, 3, "x");
+    placeShip(patrolBoat, 5, 5, "x");
+  }
+
+  function receiveAttack(row, col) {
+    if (!isValidCoordinate(row, col)) return "Out of bounds";
+    if (board[row][col] === 0 || board[row][col] === "x") return "Already hit";
+
+    if (board[row][col] !== null) {
+      const hitShip = board[row][col];
+      board[row][col] = "x";
+      return hitShip.hit();
+    }
+    board[row][col] = 0;
+    return { row, col };
+  }
+
+  return { board, testFleet, placeShip, placeFleet, receiveAttack };
 }
