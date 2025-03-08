@@ -1,13 +1,13 @@
-# Webpack-starter-kit
-A minimalistic Webpack template with ESLint and Prettier configuration.
+# Battleship 🚢  
+This is the first time I am trying to implement a project with tests in mind (using jest). 
 
-## Features
+## Technologies Used 🔧  
+- **HTML**
+- **CSS**  
+- **JavaScript**  
+- **Webpack**  
 
-- Webpack 5
-- CSS and file loaders
-- ESLint for linting
-- Prettier for code formatting
-- Development and production configurations
+This is just the beginning—let’s see where TDD takes me! 🚀  
 
 ## Usage
 
