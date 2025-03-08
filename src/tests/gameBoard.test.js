@@ -104,3 +104,44 @@ describe("Attack ship", () => {
     expect(testGameBoard.board[0][0]).toMatch("x");
   });
 });
+
+describe("All ships sunk", () => {
+  beforeEach(() => {
+    testGameBoard.placeFleet();
+  });
+
+  it("should report whether all ships are sunk", () => {
+    expect(testGameBoard.isAllShipsSunk()).toBe(false);
+  });
+
+  it("should report whether all ships are sunk", () => {
+    // attack carrier
+    testGameBoard.receiveAttack(3, 2);
+    testGameBoard.receiveAttack(3, 3);
+    testGameBoard.receiveAttack(3, 4);
+    testGameBoard.receiveAttack(3, 5);
+    testGameBoard.receiveAttack(3, 6);
+
+    // attack battleship
+    testGameBoard.receiveAttack(0, 0);
+    testGameBoard.receiveAttack(1, 0);
+    testGameBoard.receiveAttack(2, 0);
+    testGameBoard.receiveAttack(3, 0);
+
+    // attack destroyer
+    testGameBoard.receiveAttack(9, 0);
+    testGameBoard.receiveAttack(9, 1);
+    testGameBoard.receiveAttack(9, 2);
+
+    // attack submarine
+    testGameBoard.receiveAttack(0, 3);
+    testGameBoard.receiveAttack(0, 4);
+    testGameBoard.receiveAttack(0, 5);
+
+    // attack patrol boat
+    testGameBoard.receiveAttack(5, 5);
+    testGameBoard.receiveAttack(5, 6);
+
+    expect(testGameBoard.isAllShipsSunk()).toBe(true);
+  });
+});

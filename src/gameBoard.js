@@ -52,6 +52,10 @@ export default function gameBoard() {
     placeShip(patrolBoat, 5, 5, "x");
   }
 
+  function isAllShipsSunk() {
+    return testFleet.every((ship) => ship.isSunk());
+  }
+
   function receiveAttack(row, col) {
     if (!isValidCoordinate(row, col)) return "Out of bounds";
     if (board[row][col] === 0 || board[row][col] === "x") return "Already hit";
@@ -65,5 +69,12 @@ export default function gameBoard() {
     return { row, col };
   }
 
-  return { board, testFleet, placeShip, placeFleet, receiveAttack };
+  return {
+    board,
+    testFleet,
+    placeShip,
+    placeFleet,
+    isAllShipsSunk,
+    receiveAttack,
+  };
 }
