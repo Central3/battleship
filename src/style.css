@@ -27,3 +27,17 @@
   height: 50px;
   margin: 1px;
 }
+
+.occupied,
+.missed {
+  background-color: #8d99ae;
+}
+
+.interact:hover {
+  background-color: #fffbdb;
+  cursor: pointer;
+}
+
+.hit {
+  background-color: #e5625e;
+}

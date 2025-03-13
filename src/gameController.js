@@ -6,6 +6,8 @@ function initGame() {
 
   const humanBoardData = human.gameBoard;
   const computerBoardData = computer.gameBoard;
+  humanBoardData.placeFleet();
+  computerBoardData.placeFleet();
 
   return { humanBoardData, computerBoardData };
 }
