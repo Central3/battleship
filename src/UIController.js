@@ -20,11 +20,4 @@ function renderBoard(boardData, displayElement, interact) {
   }
 }
 
-function handleBoardClick(board, event) {
-  if (event.target.classList.contains("cell")) {
-    const { row, col } = event.target.dataset;
-    board.receiveAttack(row, col);
-  }
-}
-
-export { renderBoard, handleBoardClick };
+export { renderBoard };

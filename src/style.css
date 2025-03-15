@@ -28,7 +28,10 @@
   margin: 1px;
 }
 
-.occupied,
+.occupied {
+  background-color: #95948f;
+}
+
 .missed {
   background-color: #8d99ae;
 }
