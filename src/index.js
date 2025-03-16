@@ -47,12 +47,13 @@ function updateScreen() {
     switchActivePlayer();
   }
 
-  if (computerBoardData.isAllShipsSunk()) {
+  if (computerBoardData.isAllShipsSunk() && humanBoardData.isAllShipsSunk()) {
+    console.log("Draw!!!");
+    controller.abort();
+  } else if (computerBoardData.isAllShipsSunk()) {
     console.log("Player won!!!");
     controller.abort();
-  }
-
-  if (humanBoardData.isAllShipsSunk()) {
+  } else if (humanBoardData.isAllShipsSunk()) {
     console.log("Computer won!!!");
     controller.abort();
   }

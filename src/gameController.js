@@ -11,15 +11,17 @@ function initGame() {
 }
 
 function computerMove(data) {
-  const board = data.board;
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board.length; j++) {
-      if (board[i][j] !== 0 && board[i][j] !== "x") {
-        data.receiveAttack(i, j);
-        return;
-      }
+  let availableMoves = [];
+  for (let row = 0; row < data.board.length; row++) {
+    for (let col = 0; col < data.board.length; col++) {
+      if (data.board[row][col] !== 0 && data.board[row][col] !== "x")
+        availableMoves.push({ row, col });
     }
   }
+  const randomMove =
+    availableMoves[Math.floor(Math.random() * availableMoves.length)];
+
+  data.receiveAttack(randomMove.row, randomMove.col);
 }
 
 export { initGame, computerMove };
