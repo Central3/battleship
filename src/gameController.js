@@ -4,9 +4,6 @@ function initGame() {
   const human = Player();
   const computer = Player();
 
-  human.gameBoard.placeFleet();
-  computer.gameBoard.placeFleet();
-
   return { human, computer };
 }
 

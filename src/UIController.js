@@ -8,7 +8,7 @@ function renderBoard(boardData, displayElement, interact) {
       if (boardData[i][j] !== null) cell.classList.add("occupied");
       if (boardData[i][j] === 0) cell.classList.add("missed");
       if (boardData[i][j] === "x") cell.classList.add("hit");
-      if (interact) {
+      if (interact && boardData[i][j] !== 0 && boardData[i][j] !== "x") {
         cell.dataset.row = i;
         cell.dataset.col = j;
         cell.classList.add("interact");

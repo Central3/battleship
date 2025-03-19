@@ -42,18 +42,46 @@ export default function gameBoard() {
     return board;
   }
 
+  function randomPlacement(ship, attempts = 0) {
+    const alignment = ["x", "y"];
+    const randomAlignment =
+      alignment[Math.floor(Math.random() * alignment.length)];
+    const randomRow = Math.floor(Math.random() * boardDimension);
+    const randomCol = Math.floor(Math.random() * boardDimension);
+    const result = placeShip(ship, randomRow, randomCol, randomAlignment);
+
+    if (attempts > 50)
+      throw new Error(
+        "Unable to find a valid position after multiple attempts.",
+      );
+
+    if (
+      result === "Invalid ship placement" ||
+      result === "Out of bounds" ||
+      result === "Overlapping"
+    )
+      return randomPlacement(ship, attempts + 1);
+  }
+
   function placeFleet() {
     const [carrier, battleship, destroyer, submarine, patrolBoat] = testFleet;
 
-    placeShip(carrier, 3, 2, "x");
-    placeShip(battleship, 0, 0, "y");
-    placeShip(destroyer, 9, 0, "x");
-    placeShip(submarine, 0, 3, "x");
-    placeShip(patrolBoat, 5, 5, "x");
+    randomPlacement(carrier);
+    randomPlacement(battleship);
+    randomPlacement(destroyer);
+    randomPlacement(submarine);
+    randomPlacement(patrolBoat);
   }
 
   function isAllShipsSunk() {
     return testFleet.every((ship) => ship.isSunk());
+  }
+
+  function clearBoard() {
+    board = [...Array(boardDimension)].map((row) =>
+      Array(boardDimension).fill(null),
+    );
+    testFleet = [ship(5), ship(4), ship(3), ship(3), ship(2)];
   }
 
   function receiveAttack(row, col) {
@@ -70,9 +98,13 @@ export default function gameBoard() {
   }
 
   return {
-    board,
+    get board() {
+      return board;
+    },
     testFleet,
     placeShip,
+    clearBoard,
+    randomPlacement,
     placeFleet,
     isAllShipsSunk,
     receiveAttack,
