@@ -6,6 +6,7 @@ import refreshIcon from "./icons/refresh-icon.svg";
 const gameContainer = document.querySelector(".game-container");
 const playerBoardDisplay = document.querySelector(".player-game-board");
 const computerBoardDisplay = document.querySelector(".computer-game-board");
+const gameResult = document.querySelector(".result");
 
 let placedFleet = false;
 
@@ -40,6 +41,7 @@ function handleBoardClick(event) {
 }
 
 refreshIconElement.addEventListener("click", () => {
+  gameResult.textContent = "";
   placedFleet = true;
   humanBoardData.clearBoard();
   humanBoardData.placeFleet();
@@ -48,6 +50,11 @@ refreshIconElement.addEventListener("click", () => {
 
   computerBoardDisplay.addEventListener("click", handleBoardClick);
   updateScreen();
+});
+
+computerBoardDisplay.addEventListener("click", () => {
+  if (!placedFleet)
+    gameResult.textContent = "Place the fleet first to start the game";
 });
 
 function switchActivePlayer() {
@@ -66,13 +73,13 @@ function updateScreen() {
   renderBoard(humanBoardData.board, playerBoardDisplay, false);
 
   if (computerBoardData.isAllShipsSunk() && humanBoardData.isAllShipsSunk()) {
-    console.log("Draw!!!");
+    gameResult.textContent = "Draw!!!";
     computerBoardDisplay.removeEventListener("click", handleBoardClick);
   } else if (computerBoardData.isAllShipsSunk()) {
-    console.log("Player won!!!");
+    gameResult.textContent = "Player won!!!";
     computerBoardDisplay.removeEventListener("click", handleBoardClick);
   } else if (humanBoardData.isAllShipsSunk()) {
-    console.log("Computer won!!!");
+    gameResult.textContent = "Computer won!!!";
     computerBoardDisplay.removeEventListener("click", handleBoardClick);
   }
 }
