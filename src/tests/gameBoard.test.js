@@ -90,12 +90,12 @@ describe("Attack ship", () => {
   });
 
   it("should return the coordinates of the attack", () => {
-    testGameBoard.placeFleet();
     expect(testGameBoard.receiveAttack(0, 2)).toEqual({ row: 0, col: 2 });
   });
 
   it("should have hit a ship with a hit property and record the hit", () => {
-    testGameBoard.placeFleet();
+    testGameBoard.placeShip(battleship, 0, 0, "y");
+    testGameBoard.placeShip(submarine, 0, 3, "x");
     let hitBattleship = testGameBoard.receiveAttack(0, 0);
     hitBattleship = testGameBoard.receiveAttack(1, 0);
     let hitSubmarine = testGameBoard.receiveAttack(0, 4);
@@ -106,41 +106,15 @@ describe("Attack ship", () => {
 });
 
 describe("All ships sunk", () => {
-  beforeEach(() => {
-    testGameBoard.placeFleet();
-  });
-
   it("should report whether all ships are sunk", () => {
     expect(testGameBoard.isAllShipsSunk()).toBe(false);
   });
 
   it("should report whether all ships are sunk", () => {
-    // attack carrier
-    testGameBoard.receiveAttack(3, 2);
-    testGameBoard.receiveAttack(3, 3);
-    testGameBoard.receiveAttack(3, 4);
-    testGameBoard.receiveAttack(3, 5);
-    testGameBoard.receiveAttack(3, 6);
+    testGameBoard.placeFleet();
 
-    // attack battleship
-    testGameBoard.receiveAttack(0, 0);
-    testGameBoard.receiveAttack(1, 0);
-    testGameBoard.receiveAttack(2, 0);
-    testGameBoard.receiveAttack(3, 0);
-
-    // attack destroyer
-    testGameBoard.receiveAttack(9, 0);
-    testGameBoard.receiveAttack(9, 1);
-    testGameBoard.receiveAttack(9, 2);
-
-    // attack submarine
-    testGameBoard.receiveAttack(0, 3);
-    testGameBoard.receiveAttack(0, 4);
-    testGameBoard.receiveAttack(0, 5);
-
-    // attack patrol boat
-    testGameBoard.receiveAttack(5, 5);
-    testGameBoard.receiveAttack(5, 6);
+    for (let i = 0; i < 10; i++)
+      for (let j = 0; j < 10; j++) testGameBoard.receiveAttack(i, j);
 
     expect(testGameBoard.isAllShipsSunk()).toBe(true);
   });
